@@ -28,7 +28,7 @@ module Ethereum
     end
 
     def encode_int(value, _ = nil)
-      to_twos_complement(value).to_s(16).rjust(64, '0')
+      to_twos_complement(value).to_s.rjust(64, '0')
     end
 
     def encode_uint(value, _ = nil)
@@ -71,9 +71,10 @@ module Ethereum
     end
 
     def encode_string(value, _)
+      value = "0" * 24 + value.gsub(/^0x/,'')
       location = encode_uint(@inputs ? size_of_inputs(@inputs) + @tail.size/2 : 32)
       size = encode_uint(value.bytes.size)
-      content = value.bytes.map {|x| x.to_s(16).rjust(2, '0')}.join("").ljust(64, '0')
+      content = value.ljust(64, '0')
       [location, size + content]
     end
 

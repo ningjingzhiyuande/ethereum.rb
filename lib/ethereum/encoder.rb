@@ -58,7 +58,9 @@ module Ethereum
     end
 
     def encode_static_bytes(value)
-      value.bytes.map {|x| x.to_s(16).rjust(2, '0')}.join("").ljust(64, '0')
+      value = value.gsub(/^0x/,'')
+      value.ljust(64, '0')
+      #value.bytes.map {|x| x.to_s(16).rjust(2, '0')}.join("").ljust(64, '0')
     end
 
     def encode_dynamic_bytes(value)

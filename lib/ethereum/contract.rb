@@ -118,8 +118,9 @@ module Ethereum
         @client.eth_send_transaction(tx_args)["result"]
     end
 
-    def send_raw_transaction(payload, to = nil)
-      Eth.configure { |c| c.chain_id = @client.net_version["result"].to_i }
+    def send_raw_transaction(payload, to = nil,chain_id=nil)
+      get_chain_id = chain_id.nil? ?  @client.net_version["result"].to_i : chain_id
+      Eth.configure { |c| c.chain_id = get_chain_id }
       @nonce = @client.get_nonce(key.address)
       args = {
         from: key.address,

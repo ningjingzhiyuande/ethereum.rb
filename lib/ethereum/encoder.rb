@@ -28,7 +28,7 @@ module Ethereum
     end
 
     def encode_int(value, _ = nil)
-      to_twos_complement(value).to_s.rjust(64, '0')
+      to_twos_complement(value).to_s(16).rjust(64, '0')
     end
 
     def encode_uint(value, _ = nil)

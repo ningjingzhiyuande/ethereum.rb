@@ -54,6 +54,7 @@ module Ethereum
     end
 
     def encode_bytes(value, subtype)
+      value = value.gsub(/^0x/,'')
       subtype.nil? ? encode_dynamic_bytes(value) : encode_static_bytes(value)
     end
 
